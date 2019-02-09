@@ -1,6 +1,4 @@
 package com.twu.biblioteca;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
-import sun.jvm.hotspot.memory.LinearAllocBlock;
 
 import java.util.*;
 
@@ -31,13 +29,9 @@ public class Library {
         serialNumberBook.put(2, book2);
         serialNumberBook.put(3, book3);
 
-        for(int i = 1; i < serialNumberBook.size()+1; i++){
-            bookTitles.add(serialNumberBook.get(i).get(0));
-            booksAuthorsDates.add(serialNumberBook.get(i).get(0) + " | " + serialNumberBook.get(i).get(1) +
-                    " | " + serialNumberBook.get(i).get(2));
-        }
         availableBooks.clear();
         availableBooks.addAll(serialNumberBook.keySet());
+        updateBooks();
     }
 
     //Gets Welcome Message
@@ -86,7 +80,7 @@ public class Library {
                     && serialNumberBook.get(k).get(0).equals(bookName)){
                 checkedOutBooks.add(k);
                 availableBooks.remove(Integer.valueOf(k));
-                System.out.println("Thank You! Enjoy the book\n");
+                System.out.println("Thank You! Enjoy the book.\n");
                 n = k;
                 break;
             }
@@ -95,12 +89,29 @@ public class Library {
        updateBooks();
 
         if(n == 0){
-            System.out.println("Sorry, that book is not available\n");
+            System.out.println("Sorry, that book is not available.\n");
         }
         return booksAuthorsDates;
     }
 
     public List<String> checkinBook(String bookName){
+        int m = 0;
+        for(int k = 1; k < serialNumberBook.size() + 1; k++){
+            if(checkedOutBooks.contains(k) && !availableBooks.contains(k)
+                    && serialNumberBook.get(k).get(0).equals(bookName)){
+                checkedOutBooks.remove(Integer.valueOf(k));
+                availableBooks.add(k);
+                System.out.println("Thank You for returning the book.\n");
+                m = k;
+                break;
+            }
+        }
+        //Update Available Books
+        updateBooks();
+
+        if(m == 0){
+            System.out.println("That is not a valid book to return.\n");
+        }
         return booksAuthorsDates;
     }
 }

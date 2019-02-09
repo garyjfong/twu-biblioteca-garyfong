@@ -12,7 +12,7 @@ public class MainMenu extends Library{
     public void showMainMenu(){
         Scanner reader = new Scanner(System.in);
         try {
-            System.out.println("Main Menu:\n" + "1) List of Books\n" + "2) Checkout Book\n\n" +
+            System.out.println("Main Menu:\n" + "1) List of Books\n" + "2) Checkout a Book\n" + "3) Return a Book\n\n"+
                 "Enter a Number to Proceed\n" + "Enter 0 to Quit\n");
             System.out.println("----------------------------------------------------\n");
             int n = reader.nextInt();
@@ -30,6 +30,9 @@ public class MainMenu extends Library{
                     showMainMenu();
                 case 3:
                     System.out.println("Enter a book title to check in: \n");
+                    String c = reader.nextLine();
+                    checkinBook(c);
+                    showMainMenu();
                 case 0:
                     System.exit(0);
             }
