@@ -5,27 +5,34 @@ import java.util.Scanner;
 public class MainMenu extends Library{
 
      MainMenu(){
-        System.out.println(returnWelcomeMessage());
+         System.out.println(returnWelcomeMessage());
     }
 
     //Shows main menu
     public void showMainMenu(){
         Scanner reader = new Scanner(System.in);
         try {
-            int n;
-            do {
-                System.out.println("Main Menu:\n" + "1) List of Books\n" + "2) Checkout Book\n\n" +
-                    "Enter a Number to Proceed\n" + "Enter 0 to Quit\n");
-                n = reader.nextInt();
-                reader.nextLine();
-                System.out.println("\n");
-                switch (n) {
-                    case 1:
-                        printLists(returnListOfBooksAuthorsDates());
-                        System.out.println("----------------------------------------------------\n");
-                }
-            } while (n < 2);
-
+            System.out.println("Main Menu:\n" + "1) List of Books\n" + "2) Checkout Book\n\n" +
+                "Enter a Number to Proceed\n" + "Enter 0 to Quit\n");
+            System.out.println("----------------------------------------------------\n");
+            int n = reader.nextInt();
+            reader.nextLine();
+            System.out.println("\n");
+            switch (n) {
+                case 1:
+                    printLists(returnListOfBooksAuthorsDates());
+                    System.out.println("----------------------------------------------------\n");
+                    showMainMenu();
+                case 2:
+                    System.out.println("Enter a book title to checkout: \n");
+                    String b = reader.nextLine();
+                    checkoutBook(b);
+                    showMainMenu();
+                case 3:
+                    System.out.println("Enter a book title to check in: \n");
+                case 0:
+                    System.exit(0);
+            }
         }catch(InputMismatchException e){
             System.out.println("Please select a valid option!\n");
         }

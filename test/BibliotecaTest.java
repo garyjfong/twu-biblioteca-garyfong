@@ -10,7 +10,7 @@ import static org.junit.Assert.assertThat;
 
 public class BibliotecaTest {
 
-    private Library library = new Library();
+    public Library library = new Library();
 
     @Test
     public void shouldReturnWelcomeMessage(){
@@ -30,9 +30,32 @@ public class BibliotecaTest {
     @Test
     public void shouldReturnListOfBooksWithAuthorsAndDates(){
         List<String> actualListOfBooksAuthorsDates = library.returnListOfBooksAuthorsDates();
-        List<String> expectedListOfBooksAuthorsDates = Arrays.asList("Pride and Prejudice | Jane Austen | 1813",
-                "A Tale of Two Cities | Charles Dickens | 1859", "Frankenstein | Mary Wollstonecraft Shelley | 1818");
+        List<String> expectedListOfBooksAuthorsDates = new LinkedList<String>(Arrays.asList(
+                "Pride and Prejudice | Jane Austen | 1813", "A Tale of Two Cities | Charles Dickens | 1859",
+                "Frankenstein | Mary Wollstonecraft Shelley | 1818"));
         assertThat(actualListOfBooksAuthorsDates, is(expectedListOfBooksAuthorsDates));
+    }
+
+    @Test
+    public void shouldCheckoutBook(){
+        List<String> actualListOfBooks = library.returnListOfBooksAuthorsDates();
+        library.checkoutBook("Pride and Prejudice");
+        List<String> expectedListOfBooksAfterCheckout = new LinkedList<String>(Arrays.asList(
+                "A Tale of Two Cities | Charles Dickens | 1859",
+                "Frankenstein | Mary Wollstonecraft Shelley | 1818"));
+        assertThat(actualListOfBooks, is(expectedListOfBooksAfterCheckout));
+    }
+
+    @Test
+    public void shouldCheckinBook(){
+        List<String> actualListOfBooks = new LinkedList<String>(Arrays.asList(
+                "A Tale of Two Cities | Charles Dickens | 1859",
+                "Frankenstein | Mary Wollstonecraft Shelley | 1818"));
+        library.checkinBook("Pride and Prejudice");
+        List<String> expectedListOfBooksAfterCheckin = new LinkedList<String>(Arrays.asList(
+                "Pride and Prejudice | Jane Austen | 1813", "A Tale of Two Cities | Charles Dickens | 1859",
+                "Frankenstein | Mary Wollstonecraft Shelley | 1818"));
+        assertThat(actualListOfBooks, is(expectedListOfBooksAfterCheckin));
     }
 
 }
