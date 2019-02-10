@@ -1,6 +1,7 @@
 import com.twu.biblioteca.Library;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -48,14 +49,55 @@ public class BibliotecaTest {
 
     @Test
     public void shouldCheckinBook(){
-        List<String> actualListOfBooks = new LinkedList<String>(Arrays.asList(
-                "A Tale of Two Cities | Charles Dickens | 1859",
-                "Frankenstein | Mary Wollstonecraft Shelley | 1818"));
+        library.returnAvailableBooks().clear();
+        library.returnAvailableBooks().add(2);
+        library.returnAvailableBooks().add(3);
+
+        library.returnCheckedoutBooks().clear();
+        library.returnCheckedoutBooks().add(1);
+
+        library.updateBooks();
+        List<String> actualListOfBooks = library.returnListOfBooksAuthorsDates();
         library.checkinBook("Pride and Prejudice");
         List<String> expectedListOfBooksAfterCheckin = new LinkedList<String>(Arrays.asList(
                 "Pride and Prejudice | Jane Austen | 1813", "A Tale of Two Cities | Charles Dickens | 1859",
                 "Frankenstein | Mary Wollstonecraft Shelley | 1818"));
         assertThat(actualListOfBooks, is(expectedListOfBooksAfterCheckin));
+    }
+
+    @Test
+    public void shouldReturnMovies(){
+        List<String> actualListOfMovies = library.returnListOfMovies();
+        List<String> expectedListOfMovies = new LinkedList<String>(Arrays.asList("Invictus | 2009 | Clint Eastwood | 7",
+                "The Dark Knight | 2008 | Christopher Nolan | 9", "Bumblebee | 2018 | Travis Knight | 7"));
+        assertThat(actualListOfMovies, is(expectedListOfMovies));
+    }
+
+    @Test
+    public void shouldCheckoutMovie(){
+        List<String> actualListOfMovies = library.returnListOfMovies();
+        library.checkoutMovie("Invictus");
+        List<String> expectedListOfMovies = new LinkedList<String>(Arrays.asList(
+                "The Dark Knight | 2008 | Christopher Nolan | 9", "Bumblebee | 2018 | Travis Knight | 7"));
+        assertThat(actualListOfMovies, is(expectedListOfMovies));
+    }
+
+    @Test
+    public void shouldCheckinMovies(){
+        library.returnAvailableMovies().clear();
+        library.returnAvailableMovies().add(2);
+        library.returnAvailableMovies().add(3);
+
+        library.returnCheckedoutMovies().clear();
+        library.returnCheckedoutMovies().add(1);
+
+        library.updateMovies();
+        List<String> actualListOfMovies = library.returnListOfMovies();
+        library.checkinMovie("Invictus");
+        List<String> expectedListOfMoviesAfterCheckin = new LinkedList<String>(Arrays.asList(
+                "Invictus | 2009 | Clint Eastwood | 7", "The Dark Knight | 2008 | Christopher Nolan | 9",
+                "Bumblebee | 2018 | Travis Knight | 7"));
+        assertThat(actualListOfMovies, is(expectedListOfMoviesAfterCheckin));
     }
 
 }
