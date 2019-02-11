@@ -1,0 +1,8 @@
+INSERT or REPLACE INTO book(id, title) VALUES (11, "The Pragmatic Programmer");
+INSERT or REPLACE INTO member(id, name) VALUES(43, "Gary Fong");
+INSERT or REPLACE INTO checkout_item(member_id, book_id, movie_id) VALUES(43, 11, null);
+
+SELECT member.name FROM member, book, checkout_item
+WHERE member.id = checkout_item.member_id AND
+checkout_item.book_id = book.id AND
+book.title = "The Pragmatic Programmer";

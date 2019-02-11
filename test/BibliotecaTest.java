@@ -1,7 +1,5 @@
 import com.twu.biblioteca.Library;
 import org.junit.Test;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -99,5 +97,7 @@ public class BibliotecaTest {
                 "Bumblebee | 2018 | Travis Knight | 7"));
         assertThat(actualListOfMovies, is(expectedListOfMoviesAfterCheckin));
     }
+
+
 
 }
